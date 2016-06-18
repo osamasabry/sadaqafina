@@ -11,12 +11,12 @@ use Illuminate\Http\Request;
 
 class UserInfoController extends Controller {
 
-	// public function __construct()
-	// {
-	// 	$this->middleware('auth',['except' =>[ 'show','index','create','store']]);
-	// 	$this->middleware('admin',['except' =>[ 'show','create']]);
+	public function __construct()
+	{
+		$this->middleware('auth',['except' =>[ 'show','create','store','check']]);
+		$this->middleware('admin',['except' =>[ 'show','create','store','check']]);
 	    
-	// }
+	}
 
 	/**
 	 * Display a listing of the resource.
@@ -228,8 +228,9 @@ class UserInfoController extends Controller {
 	{
 		$user = User::findOrFail($user_id);
 		$user->approved = 1;
+		$user->why = "";
 		$user->save();
-		return redirect()->route('user_infos.show', $user_id);
+		return redirect()->route('user_infos.show', $user->userInfo->id);
 	}
 
 	public function disapprove($user_id ,Request $request)
@@ -238,7 +239,7 @@ class UserInfoController extends Controller {
 		$user->approved = 0;
 		$user->why = $request->input('why');
 		$user->save();
-		return redirect()->route('user_infos.show', $user_id);
+		return redirect()->route('user_infos.show', $user->userInfo->id);
 	}
 	//end of 2 functions --> by shrouk
 	

@@ -10,6 +10,8 @@
         <li><a href="{{URL::to('/admin')}}"><i class="fa fa-dashboard"></i> Home</a></li>
         <li><a href="{{URL::to('/logout')}}"> logout</a> </li>
     </ol>
+    <script src="/Admin/jquery-1.11.3.min.js" type="text/javascript"></script>
+    <script src="/Admin/vaild.js" type="text/javascript"></script>
     <link rel="stylesheet" type="text/css" media="screen" href="http://cdnjs.cloudflare.com/ajax/libs/fancybox/1.3.4/jquery.fancybox-1.3.4.css" />
 
 <style>
@@ -115,6 +117,12 @@
                         <label for="birthdate">Date Of Publicity</label>
                         <h7 style="margin-left: 40px;" class="form-control-static">{{$charity->publishdate}}</h7>
                     </a></li>
+
+                    <li><a>
+                        <label for="birthdate">Credit Number</label>
+                        <h7 style="margin-left: 40px;" class="form-control-static">{{$charity->credit}}</h7>
+                    </a></li>
+
                     @foreach($charity->charityAddress as $address) 
                     <li><a>
                         <strong><i class="fa fa-map-marker margin-r-5"></i>

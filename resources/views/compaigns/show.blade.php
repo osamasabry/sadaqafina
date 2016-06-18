@@ -116,9 +116,6 @@ a.fancybox:hover img {
                         <h7 style="margin-left: 40px;" class="form-control-static">{{$compaign->description}}</h7>
                     </a></li>
  
-                    
-                    
-
                     <div>
                         <label for="address">Image</label>    
                         <li>   
@@ -129,9 +126,6 @@ a.fancybox:hover img {
                   </ul>
                 </div>
               </div>
-
-        
-
 
 
             <a class="btn btn-link" href="{{ route('charities.index') }}"><i class="glyphicon glyphicon-backward"></i>  Back</a>

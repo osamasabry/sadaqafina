@@ -19,7 +19,7 @@ $(function() {
 				console.log(data);
 				
 				 if(data == "yes"){
-					username_err.html("<b>User Name Available</b>");
+					
 				}else{
 					username_err.html("<b>User Name NOT Available</b>");
 					$('#name1').focus();

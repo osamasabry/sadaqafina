@@ -16,12 +16,12 @@ use App\CharityDocument;
 use Illuminate\Support\Facades\Input;
 class CharityController extends Controller {
 
-	// public function __construct()
-	// {
-	// 	$this->middleware('auth',['except' =>[ 'show','create','store']]);
-	// 	$this->middleware('admin',['except' =>[ 'show','create']]);
+	public function __construct()
+	{
+		$this->middleware('auth',['except' =>[ 'show','create','store','check']]);
+		$this->middleware('admin',['except' =>[ 'show','create','store','check']]);
 	    
-	// }
+	}
 
 	/**
 	 * Display a listing of the resource.
@@ -80,6 +80,7 @@ class CharityController extends Controller {
 		$charity = new Charity();
 		$charity->taxnum = $request->input("taxnum");
         $charity->publishdate = $request->input("publishdate");
+        $charity->credit=$request->input("credit");
         $charity->user_id =$user->id;
 		$charity->save();
 
@@ -212,16 +213,17 @@ class CharityController extends Controller {
 		$Ch_user = User::findOrFail($charity->user->id);
 
 		$Ch_user->approved = 1;
+		$Ch_user->why = "";
 		$Ch_user->save();
 		return redirect()->route('charities.show', $charity_id);
 	}
 
-	public function disapprove($charity_id)
+	public function disapprove($charity_id ,Request $request)
 	{
 		$charity = Charity::findOrFail($charity_id);
 		$Ch_user = User::findOrFail($charity->user->id);
-
 		$Ch_user->approved = 0;
+		$Ch_user->why = $request->input('why');
 		$Ch_user->save();
 		return redirect()->route('charities.show', $charity_id);
 	}

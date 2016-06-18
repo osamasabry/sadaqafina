@@ -18,6 +18,15 @@
       
       $(document).ready(function () {
 
+    // ------------- DateTime Picker ----------------
+         $("#datetimepicker").keydown(function(event){
+              event.preventDefault();          
+          }); 
+
+          $("#datetimepicker").datepicker({
+              dateFormat: 'yy/mm/dd'
+          }); 
+
           case_name_err = $('#case_name');
           $(":input[name='name']").on("blur", function () {
           var sentData = {'name': $(":input[name='name']").val(), '_token': $('input[name=_token]').val()};
@@ -96,6 +105,7 @@
               if(checked_person.value){
 
                   // console.log(checked_person.value);
+                  $('#national_id-field').remove();
                   $('#name-field').remove();
                   $('#address-field').remove();
                   $('#birthdate-field').remove();
@@ -137,18 +147,18 @@
                 donationDiv.innerHTML= "";
 
                 // Donation Form for Blood ...
+                
+                
 
-                var donationForm ="<div class='form-group @if($errors->has("+bloodtype+")) has-error @endif'><label for='bloodtype-field'>Case Bloodtype</label><span style='color:red; margin-left: 10px;'>*</span><select required name='bloodtype' id='bloodtype-field' class='form-control'><option value='A+'>A+</option><option value='A-'>A-</option><option value='B+'>B+</option><option value='B-'>B-</option><option value='O+'>O+</option><option value='O-'>O-</option><option value='AB+'>AB+</option><option value='AB-'>AB-</option></select></div>";
+                var donationForm = '<div class="form-group @if($errors->has('title')) has-error @endif"><label for="title-field"> Title</label><span style="color:red; margin-left: 10px;">*</span><input required type="text" class="form-control" id="title-field" rows="3" name="title"/>{{ old("title") }}<span id="title" class="help-block"></span>@if($errors->has("title"))<span class="help-block">{{ $errors->first("title") }}</span>@endif</div>';
+
+                donationForm += '<div class="form-group @if($errors->has('casedesc')) has-error @endif"><label for="casedesc-field"> Description </label><span style="color:red; margin-left: 10px;">*</span><textarea placeholder=" Enter Your Description" class="form-control register-input" id="casedesc-field" rows="3" name="casedesc" style="resize:none" required>{{ old("casedesc") }}</textarea> <span id="casedesc" class="help-block"></span>@if($errors->has("casedesc"))<span class="help-block">{{ $errors->first("casedesc") }}</span>@endif</div>';
+
+                donationForm += "<div class='form-group @if($errors->has("+bloodtype+")) has-error @endif'><label for='bloodtype-field'>Case Bloodtype</label><span style='color:red; margin-left: 10px;'>*</span><select required name='bloodtype' id='bloodtype-field' class='form-control'><option value='A+'>A+</option><option value='A-'>A-</option><option value='B+'>B+</option><option value='B-'>B-</option><option value='O+'>O+</option><option value='O-'>O-</option><option value='AB+'>AB+</option><option value='AB-'>AB-</option></select></div>";
 
                 donationForm += "<div class='form-group @if($errors->has("+amount+")) has-error @endif'><label for='amount-field'>Blood Amount</label><span style='color:red; margin-left: 10px;'>*</span><select required name='amount' id='amount-field' class='form-control'><option value='1'>1</option><option value='2'>2</option><option value='3'>3</option><option value='4'>4</option><option value='5'>5</option><option value='6'>6</option><option value='7'>7</option><option value='8'>8</option></select>@if($errors->has("+amount+"))<span class='help-block'>{{ $errors->first("+amount+") }}</span>@endif</div>";
 
                 donationForm += "<div class='form-group @if($errors->has("+hospital+")) has-error @endif'><label for='hospital-field'>Hospital</label><span style='color:red; margin-left: 10px;'>*</span><input required type='text' class='form-control' id='hospital-field' rows='3' name='hospital'>{{ old("+hospital+") }}@if($errors->has("+hospital+"))<span class='help-block'>{{ $errors->first("+hospital+") }}</span>@endif</div>";
-
-                donationForm += "<div class='form-group'><label for='governorate_id_field'>Hospital .. Governorate Name </label><span style='color:red; margin-left: 10px;''>*</span><select required name='g_id' id='governorate_id_field' class='form-control'><option>Select</option><?php foreach ($governorates as $key => $value){
-                    echo "<option value=".($key+1).">".$value['name']."</option>"; } ?>";
-                donationForm += "</select></div>";
-
-                donationForm += '<div class="form-group"><label for="citySelect">City Name </label><span style="color:red; margin-left: 10px;">*</span><select required name="c_id" id="citySelect" class="form-control"><option value="1">mansoura</option></select></div>';
 
                 donationForm += "<div class='form-group @if($errors->has("+address+")) has-error @endif'><label for='address-field'>Hospital .. Address</label><span style='color:red; margin-left: 10px;'>*</span><input required type='text' class='form-control' id='address-field' rows='3'name='address'/>{{ old("+address+") }}@if($errors->has("+address+"))<span class='help-block'>{{ $errors->first("+address+") }}</span>@endif</div>";
 
@@ -161,8 +171,11 @@
                 donationDiv=document.getElementById("donationDiv");
                 donationDiv.innerHTML = "";
                 // Donation Form for 'Money' ...
+                var donationForm = '<div class="form-group @if($errors->has('title')) has-error @endif"><label for="title-field"> Title</label><span style="color:red; margin-left: 10px;">*</span><input required type="text" class="form-control" id="title-field" rows="3" name="title"/>{{ old("title") }}<span id="title" class="help-block"></span>@if($errors->has("title"))<span class="help-block">{{ $errors->first("title") }}</span>@endif</div>';
 
-                var donationForm ="<div class='form-group @if($errors->has("+amount+")) has-error @endif'>";
+                donationForm += '<div class="form-group @if($errors->has('casedesc')) has-error @endif"><label for="casedesc-field"> Description </label><span style="color:red; margin-left: 10px;">*</span><textarea placeholder=" Enter Your Description" class="form-control register-input" id="casedesc-field" rows="3" name="casedesc" style="resize:none" required>{{ old("casedesc") }}</textarea> <span id="casedesc" class="help-block"></span>@if($errors->has("casedesc"))<span class="help-block">{{ $errors->first("casedesc") }}</span>@endif</div>';
+
+               donationForm +="<div class='form-group @if($errors->has("+amount+")) has-error @endif'>";
 
                 donationForm += "<label for='amount-field'>Money Amount</label><span style='color:red; margin-left: 10px;'>*</span>";
                 
@@ -177,8 +190,11 @@
                 donationDiv.innerHTML= "";
 
                 // Donation Form for 'Medicine' ...
+                var donationForm = '<div class="form-group @if($errors->has('title')) has-error @endif"><label for="title-field"> Title</label><span style="color:red; margin-left: 10px;">*</span><input required type="text" class="form-control" id="title-field" rows="3" name="title"/>{{ old("title") }}<span id="title" class="help-block"></span>@if($errors->has("title"))<span class="help-block">{{ $errors->first("title") }}</span>@endif</div>';
 
-                var donationForm =" <div class='form-group @if($errors->has("+name+")) has-error @endif'>";
+                donationForm += '<div class="form-group @if($errors->has('casedesc')) has-error @endif"><label for="casedesc-field"> Description </label><span style="color:red; margin-left: 10px;">*</span><textarea placeholder=" Enter Your Description" class="form-control register-input" id="casedesc-field" rows="3" name="casedesc" style="resize:none" required>{{ old("casedesc") }}</textarea> <span id="casedesc" class="help-block"></span>@if($errors->has("casedesc"))<span class="help-block">{{ $errors->first("casedesc") }}</span>@endif</div>';
+
+                donationForm +=" <div class='form-group @if($errors->has("+name+")) has-error @endif'>";
 
                 donationForm += "<label for='name-field'>Medicine Name</label><span style='color:red; margin-left: 10px;'>*</span>";
 
@@ -200,8 +216,11 @@
                 donationDiv.innerHTML= "";
 
                 // Donation Form for 'Other' ...
+                var donationForm = '<div class="form-group @if($errors->has('title')) has-error @endif"><label for="title-field"> Title</label><span style="color:red; margin-left: 10px;">*</span><input required type="text" class="form-control" id="title-field" rows="3" name="title"/>{{ old("title") }}<span id="title" class="help-block"></span>@if($errors->has("title"))<span class="help-block">{{ $errors->first("title") }}</span>@endif</div>';
 
-                var donationForm= "<div class='form-group @if($errors->has("+description+")) has-error @endif'><label for='description-field'>Case Description</label> <span style='color:red; margin-left: 10px;'>*</span><textarea required class='form-control' id='description-field' rows='3' name='description'>{{ old("+description+") }}</textarea>";
+                donationForm += '<div class="form-group @if($errors->has('casedesc')) has-error @endif"><label for="casedesc-field"> Description </label><span style="color:red; margin-left: 10px;">*</span><textarea placeholder=" Enter Your Description" class="form-control register-input" id="casedesc-field" rows="3" name="casedesc" style="resize:none" required>{{ old("casedesc") }}</textarea> <span id="casedesc" class="help-block"></span>@if($errors->has("casedesc"))<span class="help-block">{{ $errors->first("casedesc") }}</span>@endif</div>';
+                
+                donationForm += "<div class='form-group @if($errors->has("+description+")) has-error @endif'><label for='description-field'>Case Description</label> <span style='color:red; margin-left: 10px;'>*</span><textarea required class='form-control' id='description-field' rows='3' name='description'>{{ old("+description+") }}</textarea>";
 
                   donationForm +="@if($errors->has('description'))<span class='help-block'>{{ $errors->first('description') }}</span> @endif</div>";
 
@@ -318,7 +337,7 @@
                                 <h3>Existing Person</h3>
                                 
                                 <!-- // search for existing PersonInfo  -->
-                                <input type="search" name="person_name" class="form-control"></input>
+                                <input type="search" name="person_name" class="form-control" placeholder="Search By Name or National ID ..." />
                                 <div id="person_search" style="width: 700px;"></div>
                                 
                                 <button id="firstBtn" class="btn btn-primary nextBtn btn-lg pull-right" type="button" style="margin-top: 20px;" >Next</button>
@@ -328,6 +347,16 @@
                                 <h3>New Person</h3>
 
                                 <!-- // adding new PersonInfo  -->
+                                 <div class="form-group @if($errors->has('national_id')) has-error @endif">
+                       <label for="national_id-field"> National ID</label>
+                       <span style="color:red; margin-left: 10px;">*</span>
+                    <input required type="text" class="form-control" id="national_id-field" rows="3" name="national_id"/>{{ old("national_id") }}
+                        <span id="national_id" class="help-block"></span>
+                       @if($errors->has("national_id"))
+                        <span class="help-block">{{ $errors->first("national_id") }}</span>
+                       @endif
+                    </div>
+
                           <div class="form-group @if($errors->has('name')) has-error @endif">
                        <label for="name-field"> Name</label>
                        <span style="color:red; margin-left: 10px;">*</span>
@@ -348,7 +377,7 @@
                     <div class="form-group @if($errors->has('birthdate')) has-error @endif">
                        <label for="birthdate-field"> BirthDate</label>
                        <span style="color:red; margin-left: 10px;">*</span>
-                    <input required type="date" id="birthdate-field" name="birthdate" class="form-control" value="{{ old("birthdate") }}"/>
+                    <input required type="text" id="datetimepicker" name="birthdate" class="form-control" value="{{ old("birthdate") }}"/>
                        @if($errors->has("birthdate"))
                         <span class="help-block">{{ $errors->first("birthdate") }}</span>
                        @endif
@@ -374,7 +403,7 @@
                        <label for="gender-field"> Gender</label>
                        <span style="color:red; margin-left: 10px;">*</span>
                         <select class="form-control" required 
-                                name="gender">
+                                name="gender" id="gender-field">
                             <option value="">Select</option>
                             <option value="male">male</option>
                             <option value="female">female</option>

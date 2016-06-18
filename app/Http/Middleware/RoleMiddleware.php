@@ -17,7 +17,8 @@ class RoleMiddleware
      */
     public function handle($request, Closure $next )
     {
-        if (!(Auth::guest()) and ( Auth::user()->user_type_id == 2 or Auth::user()->user_type_id == 3 ){
+        if(!(Auth::guest()) and ( Auth::user()->user_type_id == 2 or Auth::user()->user_type_id == 3 ))
+        {
             return $next($request);
         }
         else {

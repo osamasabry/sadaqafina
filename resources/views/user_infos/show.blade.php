@@ -1,4 +1,4 @@
-@extends(( (isset(Auth::user()->id)) and Auth::user()->user_type_id  == 1 or Auth::user()->user_type_id  == 2 or ( isset(Auth::user()->id) and Auth::user()->user_type_id == 3 )) ? 'layouts.adminlayout' : 'layouts.layout')
+@extends('layouts.adminlayout')
 
 @section('header')
 
@@ -8,10 +8,6 @@
         <small>Profile</small>
     </h1>
 
-    <ol class="breadcrumb">
-        <li><a href="{{URL::to('/admin')}}"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li><a href="{{URL::to('/logout')}}"> logout</a> </li>
-    </ol>
     <script src="/Admin/jquery-1.11.3.min.js" type="text/javascript"></script>
     <script src="/Admin/vaild.js" type="text/javascript"></script>
 @endsection
@@ -35,34 +31,61 @@
                 <div class="box-footer no-padding">
                   <ul class="nav nav-stacked">
                     <li><a>
-                        <label for="nome">First Name</label>
-                        <h7 style="margin-left: 40px;" class="form-control-static">{{$user_info->firstName}}</h7>
+                        <div class="row">
+                            <div class="col-md-3"><strong> 
+                            <label for="nome">First Name</label></strong></div>
+                            <div class="col-md-9">
+                            <h7 style="margin-left: 40px;" class="form-control-static">{{$user_info->firstName}}</h7></div>
+                        </div>
                     </a></li>
                     <li><a>
-                        <label for="nome">Last Name</label>
-                        <h7 style="margin-left: 40px;" class="form-control-static">{{$user_info->lastName}}</h7>
+                        <div class="row">
+                            <div class="col-md-3"><strong> 
+                            <label for="nome">Last Name</label></strong></div>
+                            <div class="col-md-9">
+                            <h7 style="margin-left: 40px;" class="form-control-static">{{$user_info->lastName}}</h7></div>
+                        </div>
                     </a></li>
                     <li><a>
-                        <label for="nationalid">National ID</label>
-                        <h7 style="margin-left: 40px;" class="form-control-static">{{$user_info->nationalid}}</h7>
+                        <div class="row">
+                            <div class="col-md-3"><strong> 
+                            <label for="nationalid">National ID</label></strong></div>
+                            <div class="col-md-9">
+                            <h7 style="margin-left: 40px;" class="form-control-static">{{$user_info->nationalid}}</h7></div>
+                        </div>
                     </a></li>
                     <li><a>
-                        <label for="birthdate">Birth Date</label>
-                        <h7 style="margin-left: 40px;" class="form-control-static">{{$user_info->birthdate}}</h7>
+                        <div class="row">
+                            <div class="col-md-3"><strong> 
+                            <label for="birthdate">Birth Date</label></strong></div>
+                             <div class="col-md-9">
+                            <h7 style="margin-left: 40px;" class="form-control-static">{{$user_info->birthdate}}</h7></div>
+                        </div>
                     </a></li>
                     <li><a>
-                        <label for="gender">E-mail</label>
-                        <h7 style="margin-left: 40px;" class="form-control-static">{{$user_info->user->email}}</h7>
+                    <div class="row">
+                            <div class="col-md-3"><strong>
+                            <label for="gender">E-mail</label></strong></div>
+                            <div class="col-md-9">
+                            <h7 style="margin-left: 40px;" class="form-control-static">{{$user_info->user->email}}</h7></div>
+                        </div>
                     </a></li>
                     <li><a>
-                        <label for="gender">Phone</label>
-                        <h7 style="margin-left: 40px;" class="form-control-static">{{$user_info->user->phone}}</h7>
+                        <div class="row">
+                            <div class="col-md-3"><strong>
+                            <label for="gender">Phone</label></strong></div>
+                            <div class="col-md-9">
+                            <h7 style="margin-left: 40px;" class="form-control-static">{{$user_info->user->phone}}</h7></div>
+                        </div>
                     </a></li>
                     <li><a>
-                        <strong><i class="fa fa-map-marker margin-r-5"></i>
-                        <label for="address">Address</label></strong>
-                         
-                         <h7 style="margin-left: 40px;" class="form-control-static">{{$user_info->governorate->name}}, {{$user_info->city->name}}, {{$user_info->address}}</h7>
+                         <div class="row">
+                            <div class="col-md-3">
+                            <strong><i class="fa fa-map-marker margin-r-5"></i>
+                            <label for="address">Address</label></strong></div>
+                            <div class="col-md-9">
+                             <h7 style="margin-left: 40px;" class="form-control-static">{{$user_info->governorate->name}}, {{$user_info->city->name}}, {{$user_info->address}}</h7></div>
+                        </div>
                     </a></li>
                   </ul>
                 </div>
@@ -74,7 +97,7 @@
                     <a style="margin-top: -420px;margin-right: 20px;" class="btn btn-primary btn-group" role="group" href="{{ route('user_infos.edit', $user_info->id) }}"><i class="glyphicon glyphicon-edit"></i> Edit</a>
                 @elseif(Auth::user()->user_type_id === 1)
                     @if ($user_info->user->approved === 0)
-                        <a style="margin-top: -420px;margin-right: 20px;" class="btn btn-primary btn-group" name="approve" role="group" href="{!! URL::to('approve',['user_id'=>$user_info->id]) !!}"><i class="glyphicon glyphicon-edit"></i> Approve</a>
+                        <a style="margin-top: -420px;margin-right: 20px;" class="btn btn-primary btn-group" name="approve" role="group" href="{!! URL::to('approve',['user_id'=>$user_info->user->id]) !!}"><i class="glyphicon glyphicon-edit"></i> Approve</a>
 
                     @elseif ($user_info->user->approved === 1)
 
@@ -105,7 +128,7 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="col-md-12">
-                        <form action="{!! URL::to('disapprove',['user_id'=>$user_info->id]) !!}" method="POST">
+                        <form action="{!! URL::to('disapprove',['user_id'=>$user_info->user->id]) !!}" method="POST">
                             <input type="hidden" name="_token" value="{{{ csrf_token() }}}" />
                      
                             <label class="form-control">Reason for Disapprove</label>
